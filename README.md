@@ -1,4 +1,4 @@
-# Slush Generator-scalable-react [![Build Status](https://secure.travis-ci.org/ryanccollins/slush-generator-scalable-react.png?branch=master)](https://travis-ci.org/ryanccollins/slush-generator-scalable-react) [![NPM version](https://badge-me.herokuapp.com/api/npm/slush-generator-scalable-react.png)](http://badges.enytc.com/for/npm/slush-generator-scalable-react)
+# Slush Generator for Scalable React Boilerplate [![NPM version](https://badge-me.herokuapp.com/api/npm/slush-generator-scalable-react.png)](http://badges.enytc.com/for/npm/slush-generator-scalable-react)
 
 > Generator to scaffold out the [scalable react boilerplate](https://github.com/RyanCCollins/scalable-react-boilerplate) project
 
