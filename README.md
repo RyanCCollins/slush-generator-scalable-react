@@ -1,7 +1,20 @@
 # Slush Generator-scalable-react [![Build Status](https://secure.travis-ci.org/ryanccollins/slush-generator-scalable-react.png?branch=master)](https://travis-ci.org/ryanccollins/slush-generator-scalable-react) [![NPM version](https://badge-me.herokuapp.com/api/npm/slush-generator-scalable-react.png)](http://badges.enytc.com/for/npm/slush-generator-scalable-react)
 
-> Generator for the scalable react boilerplate project
+> Generator to scaffold out the [scalable react boilerplate](https://github.com/RyanCCollins/scalable-react-boilerplate) project
 
+This project basically just allows you npm install a generator that will install the starter project.  Generators for scaffolding containers / components are contained within the starter project regardless of whether you install it with the generator or not.
+
+In other words, running
+```
+git clone https://github.com/RyanCCollins/scalable-react-boilerplate
+```
+and
+
+```
+npm run setup
+```
+
+will accomplish the same thing as using this to scaffold the initial starter project.
 
 ## Getting Started
 
@@ -40,7 +53,7 @@ See the [CONTRIBUTING Guidelines](https://github.com/ryanccollins/slush-generato
 ## Support
 If you have any problem or suggestion please open an issue [here](https://github.com/ryanccollins/slush-generator-scalable-react/issues).
 
-## License 
+## License
 
 The MIT License
 
@@ -66,4 +79,3 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-
