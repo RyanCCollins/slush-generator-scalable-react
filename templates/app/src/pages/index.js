@@ -1,7 +1,3 @@
-import NotFoundPage from './NotFoundPage/index';
-import LandingPage from './LandingPage/index';
-
-export {
-  NotFoundPage,
-  LandingPage,
-};
+/* Assemble all pages for export */
+export NotFoundPage from './NotFoundPage/index';
+export LandingPage from './LandingPage/index';

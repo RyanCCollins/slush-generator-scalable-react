@@ -104,7 +104,7 @@ To try the example application out or to use the project, follow the instruction
     Removes the bundled code and the production ready files
 
 ## Generators
-The boilerplate contains generates for easy project scaffolding.  At the moment, the generator has the following scaffold generating commands built in:
+The boilerplate contains generators for easy project scaffolding.  At the moment, the generator has the following scaffold generating commands built in:
 - containers
   - Connected / Not connected ES6 Class containers (higher order)
   - SCSS Modules
@@ -121,7 +121,15 @@ To run the generators, run
 npm run generate
 ```
 
-And follow the on screen prompts to select the options you wish to use.
+Which will give you a list to select from with all of the available generators.  Follow the on screen prompts to select the options you wish to use.
+
+For convenience, you can bypass the initial selection and scaffold out containers, components and pages by running
+
+```
+npm run generate:<type_of_component>
+```
+
+where <type_of_component> is one of: component, container or page.
 
 The generators use the same feature-first file organization as the rest of the project, encapsulating components within their own folder.
 
@@ -171,12 +179,12 @@ For information on how to build your own generators with relative ease, please g
 
 ## Timeline / TODOS
 * [x] Write README file
-* [ ] Write component tests using Enzyme
+* [x] Write component tests using Enzyme
+* [x] Implement a Rails like component generator
 * [ ] Write wiki / other documentation
-* [ ] Implement a Rails like component generator
 
 ### Acknowledgements
-![Scalable React Boilerplate Logo](https://github.com/RyanCCollins/cdn/blob/master/alumni-webapp/udacity-alumni-small.png?raw=true)
+![Udacity Alumni Loves React](https://github.com/RyanCCollins/cdn/blob/master/alumni-webapp/udacity-heart-react.png?raw=true)
 
 This boilerplate began its life as a fork of the [React Redux Simple Starter](https://github.com/RyanCCollins/react-redux-simple-starter) project and was setup as a starter project for the Udacity Alumni Web application open-source project.
 

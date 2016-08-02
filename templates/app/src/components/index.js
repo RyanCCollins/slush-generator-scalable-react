@@ -1,7 +1,3 @@
-import FeatureFirstComponent from './FeatureFirstComponent';
-import App from './App';
-
-export {
-  FeatureFirstComponent,
-  App,
-};
+/* Assemble all components for export */
+export FeatureFirstComponent from './FeatureFirstComponent';
+export App from './App';
