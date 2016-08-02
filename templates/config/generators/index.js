@@ -12,10 +12,10 @@ module.exports = (plop) => {
   });
   plop.addHelper('directory', (comp) => {
     try {
-      fs.accessSync(`app/src/containers/${comp}`, fs.F_OK);
-      return `containers/${comp}`;
+      fs.accessSync('app/src/containers/' + comp, fs.F_OK);
+      return 'containers/'+ comp;
     } catch (e) {
-      return `components/${comp}`;
+      return 'components/' + comp;
     }
   });
   plop.addHelper('curly', (object, open) => (open ? '{' : '}'));
