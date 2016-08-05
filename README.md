@@ -53,6 +53,9 @@ See the [CONTRIBUTING Guidelines](https://github.com/ryanccollins/slush-generato
 ## Support
 If you have any problem or suggestion please open an issue [here](https://github.com/ryanccollins/slush-generator-scalable-react/issues).
 
+## Timeline / Todos
+* [x] Add a timeline / todos
+
 ## License
 
 The MIT License
