@@ -8,7 +8,7 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: 'What should it be called?',
-      default: 'MyContainer',
+      default: 'Scalable',
       validate: value => {
         if ((/.+/).test(value)) {
           return componentNameCheck(value) ? 'A container with this name already exists' : true;
@@ -74,6 +74,14 @@ module.exports = {
         type: 'add',
         path: '../../app/src/containers/{{properCase name}}Container/tests/actions.test.js',
         templateFile: './container/actions.test.js.hbs',
+        abortOnFail: true,
+      });
+
+      // README.md
+      actions.push({
+        type: 'add',
+        path: '../../app/src/containers/{{properCase name}}Container/README.md',
+        templateFile: './container/README.md.hbs',
         abortOnFail: true,
       });
 

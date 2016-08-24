@@ -8,6 +8,12 @@ Following the lead of the famous [React Boilerplate]() project, this starter pro
 
 We incorporate an ESLint configuration and follow strictly the [AirBnb JS & JSX style guides](https://github.com/airbnb/javascript).
 
+# Experimentation
+This is a living and breathing project. At times, we may implement features that are expiremental, meaning that they may not entirely work.  We will do our best to point out the areas that are not fully tested and encourage you to submit issues and pull requests if you find a bug and want to help us fix it!
+
+### Docker Support
+Coming soon the app will support Docker, which will contain a configured web server to make deployment of this boilerplate simple!  You can take a look at [this branch](https://github.com/RyanCCollins/scalable-react-boilerplate/tree/feat_rc_docker_config) for more details.
+
 # Documentation
 
 ## Getting Started
@@ -105,23 +111,30 @@ To try the example application out or to use the project, follow the instruction
 
 ## Generators
 The boilerplate contains generators for easy project scaffolding.  At the moment, the generator has the following scaffold generating commands built in:
-- containers
+- Container `npm run generate:container`
+  - Name: the name of the container, i.e. `Awesome`, which converts to: `AwesomeContainer`
   - Connected / Not connected ES6 Class containers (higher order)
   - SCSS Modules
   - Reducers, actions and constants
   - Tests for all of the above
-- components
+  - README.md file that documents the container
+- Component `npm run generate:component`
+  - Name: the name of the component, i.e. `Button`
   - Stateless functional components (recommended)
   - ES6 class components
   - SCSS modules
   - Tests for all of the above
+  - README.md file that documents the component
+- Page `npm run generate:page`
+  - Name: The name of the route, i.e. Home, which gets converted to `HomePage`
+  - Route: the route that corresponds to the page
 
-To run the generators, run
+To run the generators with a list of options, run
 ```
 npm run generate
 ```
 
-Which will give you a list to select from with all of the available generators.  Follow the on screen prompts to select the options you wish to use.
+Follow the on screen prompts to select the options you wish to use.
 
 For convenience, you can bypass the initial selection and scaffold out containers, components and pages by running
 
@@ -134,7 +147,7 @@ where <type_of_component> is one of: component, container or page.
 The generators use the same feature-first file organization as the rest of the project, encapsulating components within their own folder.
 
 #### **Gotchas**
-If you are importing / exporting your modules from a root directory index.js file, then you will need to manually import / export the component / container after it has been generated.  Of course, you will also need to import the component and use it somewhere for it to show up on screen.
+In order to get the import / export to work, the generator does some pattern matching of the comments in the files to place the new imports.  Just don't delete the comments within the root level index.js file in each directory and things will work fine!
 
 From `app/src/container/index.js` or `app/src/component/index.js`
 ```
@@ -149,6 +162,24 @@ export {
 
 ### Configuring your own generators
 For information on how to build your own generators with relative ease, please go to the [Plop Microgenerator](https://github.com/amwmedia/plop) homepage for detailed instructions.
+
+## Testing
+Included in the setup is a test suite that will run your tests in the browser using Karma.  A number of testing utilities are included, including
+- Expect (Plus Expect-JSX)
+- Mocha
+- Chai (JSX and Immutable)
+- Enzyme
+- Karma (including multiple Karma plugins)
+
+You can see examples for testing of React Components, Redux Action Creators and Reducers in the repository [here](https://github.com/RyanCCollins/scalable-react-boilerplate/tree/master/app/src/containers/FeatureFirstContainer/tests).  Please follow the convention of naming tests with a .test.js postfix, or else the test suite will not recognize your tests.
+
+To run tests, you will run
+```js
+npm run test
+```
+
+which will pick up any file with the .test.js postfix and run it through Karma / Mocha, printing a report to the commandline.
+
 
 ## Technologies / Libraries
 
@@ -173,6 +204,7 @@ For information on how to build your own generators with relative ease, please g
 - [Mocha](http://mochajs.org/) - unit tests
 - [jsdom](https://github.com/tmpvar/jsdom) - vdom to test React without browser
 - [Expect](https://github.com/mjackson/expect) - assertion library
+- [Enzyme](https://github.com/airbnb/enzyme) - React Testing utils for rendering of components
 - [Chai / Immutable](http://chaijs.com/) - assertion library for Immutable JS
 - A bunch of useful scripts
 
@@ -181,6 +213,11 @@ For information on how to build your own generators with relative ease, please g
 * [x] Write README file
 * [x] Write component tests using Enzyme
 * [x] Implement a Rails like component generator
+* [x] Add README.md files to each component
+* [x] Add [Grommet](grommet.io) as an optional starter component library
+* [x] Add Webpack stats plugin
+* [x] Dogfood the project and iterate on suggestions
+* [ ] Create Docker container & automation scripts
 * [ ] Write wiki / other documentation
 
 ### Acknowledgements

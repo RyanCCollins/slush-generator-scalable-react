@@ -1,25 +1,37 @@
-import FeatureFirstContainer from '../index';
-
+import { FeatureFirstContainer } from '../index';
 import expect from 'expect';
-import { shallow } from 'enzyme';
 import React from 'react';
-import { FeatureFirstComponent } from 'components';
+import { shallow } from 'enzyme';
+
+// We are testing our react components using
+// Airbnb's enzyme
+// Checkout https://medium.com/airbnb-engineering/enzyme-javascript-testing-utilities-for-react-a417e5e5090f#.n5bteqyp4
+// When testing connected containers, things can be a little trickier
+// because you need to mock the store in order to test the components
+// in total isolation.
+// SEE: http://redux.js.org/docs/recipes/WritingTests.html
+function setup() {
+  const props = {
+    isLoading: true,
+  };
+  const wrapper = shallow(
+    <FeatureFirstContainer isLoading={props.isLoading} />
+  );
+  return {
+    props,
+    wrapper,
+  };
+}
 
 describe('<FeatureFirstContainer />', () => {
-  it('should render a loading indicator while it loads', () => {
-    const component = shallow(
-      <FeatureFirstContainer loading />
-    );
+  it('should show a loading indicator while loading', () => {
+    const {
+      wrapper,
+    } = setup();
     expect(
-      component.text()
-    ).to.contain('LOADING');
-  });
-  it('should render the feature first component with Udacity logo when done loading', () => {
-    const component = shallow(
-      <FeatureFirstComponent />
-    );
-    expect(
-      component.find('#udacity-alumni-logo').length
-    ).toEqual(1);
+      wrapper.contains(
+        <h1>LOADING...</h1>
+      )
+    ).toBe(true);
   });
 });
