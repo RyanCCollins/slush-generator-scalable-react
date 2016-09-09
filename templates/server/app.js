@@ -14,6 +14,6 @@ app.listen(serverPort, '0.0.0.0', (err) => {
   if (err) {
     return console.warn(err);
   }
-  return console.info('==> 😎 Listening on port ${port}. Open http://0.0.0.0:' + serverPort + '/ in your browser.');
+  return console.info('==> 😎 Listening on port' + serverPort + '. Open http://0.0.0.0:' + serverPort + '/ in your browser.');
 });
 /* eslint-enable */
