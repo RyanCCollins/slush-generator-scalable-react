@@ -1,18 +1,6 @@
-![Scalable Boilerplate Logo](https://github.com/RyanCCollins/cdn/blob/master/alumni-webapp/scalable-boilerplate-logo.png?raw=true)
+<%= appName %>
 
-# Scalable React Boilerplate [![npm version](https://badge.fury.io/js/scalable-react-boilerplate.svg)](https://badge.fury.io/js/scalable-react-boilerplate)
-
-The boilerplate aims to follow best practices for building highly scalable and reusable apps and component libraries with React and cutting edge JavaScript.
-
-Following the lead of the famous [React Boilerplate]() project, this starter project incorporates the Feature-first architecture, meaning that files are organized by the feature they implement, not the filetype.  This provides a mechanism to scale React projects because it encourages isolation, encapsulation and reusability.
-
-We incorporate an ESLint configuration and follow strictly the [AirBnb JS & JSX style guides](https://github.com/airbnb/javascript).
-
-# Experimentation
-This is a living and breathing project. At times, we may implement features that are expiremental, meaning that they may not entirely work.  We will do our best to point out the areas that are not fully tested and encourage you to submit issues and pull requests if you find a bug and want to help us fix it!
-
-### Docker Support
-Coming soon the app will support Docker, which will contain a configured web server to make deployment of this boilerplate simple!  You can take a look at [this branch](https://github.com/RyanCCollins/scalable-react-boilerplate/tree/feat_rc_docker_config) for more details.
+<%= appDescription %>
 
 # Documentation
 
