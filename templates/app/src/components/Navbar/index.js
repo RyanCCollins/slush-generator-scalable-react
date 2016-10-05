@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from 'grommet/components/Header';
-import Title from 'grommet/components/Title';
-import Menu from 'grommet/components/Menu';
-import Anchor from 'grommet/components/Anchor';
-import Search from 'grommet/components/Search';
+import Header from 'grommet-udacity/components/Header';
+import Title from 'grommet-udacity/components/Title';
+import Menu from 'grommet-udacity/components/Menu';
+import Anchor from 'grommet-udacity/components/Anchor';
+import Search from 'grommet-udacity/components/Search';
 import LogoImage from './logo.png';
 
 import styles from './index.module.scss';
@@ -25,7 +25,7 @@ const Navbar = () => (
         <Anchor href="#">
           Third
         </Anchor>
-        <Search dropAlign={{"right": "right"}} />
+        <Search dropAlign={{ right: 'right' }} />
       </Menu>
     </Header>
   </div>

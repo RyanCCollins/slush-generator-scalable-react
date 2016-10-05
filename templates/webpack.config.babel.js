@@ -3,14 +3,16 @@ import path from 'path';
 import HtmlwebpackPlugin from 'html-webpack-plugin';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import Visualizer from 'webpack-visualizer-plugin';
-const ROOT_PATH = path.resolve(__dirname);
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
+const ROOT_PATH = path.resolve(__dirname);
 const env = process.env.NODE_ENV || 'development';
+const isProduction = env === 'production';
 const PORT = process.env.PORT || 1337;
 const HOST = '0.0.0.0'; // Set to localhost if need be.
 
 module.exports = {
-  devtool: process.env.NODE_ENV === 'production' ? '' : 'source-map',
+  devtool: isProduction ? '' : 'source-map',
   entry: [
     path.resolve(ROOT_PATH,'app/src/index')
   ],
@@ -18,7 +20,7 @@ module.exports = {
     preLoaders: [
       {
         test: /\.jsx?$/,
-        loaders: process.env.NODE_ENV === 'production' ? [] : ['eslint'],
+        loaders: isProduction ? [] : ['eslint'],
         include: path.resolve(ROOT_PATH, './app')
       }
     ],
@@ -37,17 +39,24 @@ module.exports = {
     },
     {
       test: /\.module\.scss$/,
-      loaders: [
-          'style',
-          'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-          'resolve-url',
-          'sass'
-      ]
+      loader: !isProduction ?
+        'style-loader!css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!resolve-url-loader!sass-loader'
+      :
+        ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!resolve-url-loader!sass-loader'
+        }),
     },
     {
       test: /\.scss$/,
       exclude: /\.module\.scss$/,
-      loaders: ["style", "css", "sass"]
+      loader: !isProduction ?
+        'style-loader!css-loader!sass-loader'
+      :
+        ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: '!css-loader!sass-loader'
+        }),
     },
     {
       test: /\.css$/,
@@ -67,6 +76,11 @@ module.exports = {
     }
   ]
   },
+  sassLoader: {
+    includePaths: [
+      './node_modules',
+    ]
+  },
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
@@ -76,9 +90,16 @@ module.exports = {
     },
   },
   output: {
-    path: process.env.NODE_ENV === 'production' ? path.resolve(ROOT_PATH, 'server/public') : path.resolve(ROOT_PATH, 'app/build'),
+    path: isProduction ?
+      path.resolve(ROOT_PATH, 'server/public')
+    :
+      path.resolve(ROOT_PATH, 'app/build'),
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: isProduction ? '[name].[chunkhash].js' : 'bundle.js',
+    chunkFilename: '[name].[chunkhash].chunk.js',
+  },
+  stats: {
+    chunks: isProduction,
   },
   devServer: {
     contentBase: path.resolve(ROOT_PATH, 'app/build'),
@@ -91,13 +112,48 @@ module.exports = {
     host: HOST,
     port: PORT
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new NpmInstallPlugin(),
-    new HtmlwebpackPlugin({
-      title: 'Scalable React Boilerplate',
-      template: 'index.html'
-    }),
-    new Visualizer()
-  ]
+  plugins: isProduction ?
+    [
+      new ExtractTextPlugin('[name].[contenthash].css'),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        children: true,
+        minChunks: 2,
+        async: true,
+      }),
+      new HtmlwebpackPlugin({
+        template: 'config/templates/_index.html',
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true,
+        },
+        inject: true,
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      }),
+      new webpack.optimize.OccurrenceOrderPlugin(true),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: false
+      }),
+    ]
+  :
+    [
+      new webpack.HotModuleReplacementPlugin(),
+      new NpmInstallPlugin(),
+      new HtmlwebpackPlugin({
+        title: 'Scalable React Boilerplate',
+        template: 'index.html'
+      }),
+      new Visualizer()
+    ]
 };
