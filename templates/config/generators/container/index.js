@@ -29,6 +29,18 @@ module.exports = {
       default: true,
       message: 'Do you want actions/constants/reducer for this container?',
     },
+    {
+      type: 'confirm',
+      name: 'wantSelectors',
+      default: false,
+      message: 'Do you want to use reselect?',
+    },
+    {
+      type: 'confirm',
+      name: 'wantGraphQL',
+      default: false,
+      message: 'Do you want a colocated GraphQL / Apollo query and mutation for this container?',
+    },
   ],
   actions: (data) => {
     const actions = [{
@@ -47,7 +59,7 @@ module.exports = {
     actions.push({
       type: 'modify',
       path: '../../app/src/containers/index.js',
-      pattern: /(\/\* Assemble all containers for export \*\/)/g,
+      pattern: /(\/\* GENERATOR: Assemble all containers for export \*\/)/g,
       template: trimTemplateFile('config/generators/container/export.js.hbs'),
     });
 
@@ -56,6 +68,15 @@ module.exports = {
         type: 'add',
         path: '../../app/src/containers/{{properCase name}}Container/index.module.scss',
         templateFile: './container/styles.scss.hbs',
+        abortOnFail: true,
+      });
+    }
+
+    if (data.wantSelectors) {
+      actions.push({
+        type: 'add',
+        path: '../../app/src/containers/{{properCase name}}Container/selectors.js',
+        templateFile: './container/selectors.js.hbs',
         abortOnFail: true,
       });
     }
@@ -75,6 +96,34 @@ module.exports = {
         path: '../../app/src/containers/{{properCase name}}Container/tests/actions.test.js',
         templateFile: './container/actions.test.js.hbs',
         abortOnFail: true,
+      });
+
+      actions.push({
+        type: 'modify',
+        path: '../../app/src/store.js',
+        pattern: /(\/\* GENERATOR: Import all of your initial state \*\/)/g,
+        template: trimTemplateFile('config/generators/container/store.import.js.hbs'),
+      });
+
+      actions.push({
+        type: 'modify',
+        path: '../../app/src/store.js',
+        pattern: /(\/\* GENERATOR: Compile all of your initial state \*\/)/g,
+        template: trimTemplateFile('config/generators/container/store.usage.js.hbs'),
+      });
+
+      actions.push({
+        type: 'modify',
+        path: '../../app/src/reducers.js',
+        pattern: /(\/\* GENERATOR: Import all of your reducers \*\/)/g,
+        template: trimTemplateFile('config/generators/container/reducers.import.js.hbs'),
+      });
+
+      actions.push({
+        type: 'modify',
+        path: '../../app/src/reducers.js',
+        pattern: /(\/\* GENERATOR: Compile all of your reducers \*\/)/g,
+        template: trimTemplateFile('config/generators/container/reducers.usage.js.hbs'),
       });
 
       // README.md

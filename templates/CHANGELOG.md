@@ -1,0 +1,2 @@
+# <%= appName %> Change Log
+
