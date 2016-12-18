@@ -10,7 +10,7 @@ import { getDataFromTree } from 'react-apollo/server';
 import { createNetworkInterface } from 'apollo-client';
 import store from '../app/src/store.js';
 import { routes } from '../app/src/routes.js';
-import { BASE_URL } from '../app/src/config';
+import { GRAPHQL_URL } from '../app/src/config';
 import Html from './utils/Html';
 import createApolloClient from './utils/create-apollo-client';
 import manifest from './public/manifest.json';
@@ -22,7 +22,6 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 // Need to set this to your api url
 const IP = process.env.IP || '0.0.0.0';
 const PORT = process.env.PORT || 1337;
-const apiUrl = BASE_URL + 'graphql';
 
 app.use(morgan('combined'));
 app.use(express.static(__dirname + '/public'));
@@ -40,7 +39,7 @@ app.use((req, res) => {
         const client = createApolloClient({
           ssrMode: true,
           networkInterface: createNetworkInterface({
-            uri: apiUrl,
+            uri: GRAPHQL_URL,
             credentials: 'same-origin',
             headers: req.headers,
           }),

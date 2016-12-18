@@ -8,5 +8,6 @@ const URL_MAP = {
 };
 
 const BASE_URL = URL_MAP[environment];
+const GRAPHQL_URL = BASE_URL + 'graphql';
 
-export default { BASE_URL };
+export default { BASE_URL, GRAPHQL_URL };
