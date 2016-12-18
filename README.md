@@ -1,3 +1,5 @@
+**DEPRECATION NOTICE: This project is not being updated with new versions of the Scalable React Boilerplate project.  Please install directly following the instructions [located in the repo](https://github.com/RyanCCollins/scalable-react-boilerplate)**
+
 # Slush Generator for Scalable React Boilerplate [![NPM version](https://badge-me.herokuapp.com/api/npm/slush-generator-scalable-react.png)](http://badges.enytc.com/for/npm/slush-generator-scalable-react)
 
 > Generator to scaffold out the [scalable react boilerplate](https://github.com/RyanCCollins/scalable-react-boilerplate) project
