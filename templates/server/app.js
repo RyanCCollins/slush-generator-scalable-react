@@ -63,7 +63,9 @@ app.use((req, res) => {
               state={ctx.store.getState()}
             />
           );
-          res.status(200).send(`<!doctype html>\n${renderToStaticMarkup(html)}`);
+          const html = renderToStaticMarkup(html);
+          const blob = '<!doctype html>\n' + html;
+          res.status(200).send(blob);
         }).catch(e => console.error('RENDERING ERROR:', e)); // eslint-disable-line no-console
       } else {
         res.status(404).send('Not found');
