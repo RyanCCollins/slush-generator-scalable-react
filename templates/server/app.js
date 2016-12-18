@@ -75,6 +75,6 @@ app.listen(PORT, IP, (err) => {
   if (err) {
     return console.warn(err);
   }
-  return console.info(`==> 😎 Listening on port ${PORT}. Open http://${IP}:${PORT} in your browser.`);
+  return console.info('==> 😎 Listening on port' + PORT + '.  Open http://0.0.0.0:' + PORT + '/ in your browser.');
 });
 /* eslint-enable */
