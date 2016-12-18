@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as LandingActionCreators from './actions';
 import cssModules from 'react-css-modules';
-import styles from './index.module.scss';
 import Box from 'grommet-udacity/components/Box';
 import Section from 'grommet-udacity/components/Section';
 import Hero from 'grommet-udacity/components/Hero';
@@ -11,9 +9,6 @@ import Headline from 'grommet-udacity/components/Headline';
 import Footer from 'grommet-udacity/components/Footer';
 import Button from 'grommet-udacity/components/Button';
 import Heading from 'grommet-udacity/components/Heading';
-import List from 'grommet-udacity/components/List';
-import ListItem from 'grommet-udacity/components/ListItem';
-import Anchor from 'grommet-udacity/components/Anchor';
 import Columns from 'grommet-udacity/components/Columns';
 import {
   LoadingIndicator,
@@ -21,7 +16,10 @@ import {
   WelcomeModal,
   Contributor,
 } from 'components';
+import { Maybe } from 'functional-components';
 import { reduxForm } from 'redux-form';
+import * as LandingActionCreators from './actions';
+import styles from './index.module.scss';
 
 export const formFields = [
   'nameInput',
@@ -47,7 +45,6 @@ class LandingContainer extends Component {
       actions,
       isShowingModal,
       contributors,
-      links,
       name,
       fields: {
         nameInput,
@@ -61,7 +58,7 @@ class LandingContainer extends Component {
           onClose={actions.closeModal}
           isVisible={isShowingModal}
         />
-        {isLoading ?
+        <Maybe predicate={isLoading}>
           <Section
             align="center"
             justify="center"
@@ -69,41 +66,53 @@ class LandingContainer extends Component {
           >
             <LoadingIndicator isLoading />
           </Section>
-        :
-          <Box>
+        </Maybe>
+        <Maybe predicate={!isLoading}>
+          <Box full="horizontal">
             <Hero
-              backgroundImage="https://github.com/RyanCCollins/cdn/raw/master/alumni-webapp/scalable-boilerplate-logo.png?raw=true"
-            />
-            <Section align="center" justify="center">
-              <Headline align="center">
-                About the App
-              </Headline>
-              <Divider />
-            </Section>
-            <Section align="center" justify="center">
-              <Heading align="center">
-                {name && `Welcome ${name}!`}
-              </Heading>
-              <Heading tag="h4" align="center">
-                This boilerplate was made as a tool for use in Udacity Alumni projects.
-              </Heading>
-              <Heading tag="h4" align="center">
-                Since making it, is has been used in dozens of projects.
-              </Heading>
-              <Heading tag="h4" align="center">
-                Some of these are listed below
-              </Heading>
-              <Box align="center" pad="medium">
-                <List>
-                  {links.map((link, i) =>
-                    <ListItem key={i}>
-                      <Anchor href={link.url}>
-                        {link.name}
-                      </Anchor>
-                    </ListItem>
-                  )}
-                </List>
+              justify="center"
+              align="center"
+              colorIndex="grey-1"
+              backgroundImage="https://github.com/RyanCCollins/cdn/blob/master/misc/gradient.jpg?raw=true"
+            >
+              <Box align="center" justify="center" style={{ width: '100%' }} colorIndex="grey-1-a">
+                <img
+                  alt="udacity alumni"
+                  className="img-responsive"
+                  style={{ width: '300px' }}
+                  src="https://github.com/RyanCCollins/cdn/blob/master/alumni-webapp/udacity-alumni-png.png?raw=true"
+                />
+                <Headline align="center" size="small">
+                  Scaling the Front End Feature First!
+                </Headline>
               </Box>
+            </Hero>
+            <Section align="center" justify="center">
+              {name ?
+                <Headline align="center">
+                  {name && `Welcome ${name}!`}
+                </Headline>
+              :
+                <Button
+                  label="Click me for a greeting"
+                  onClick={actions.openModal}
+                />
+              }
+              <Divider />
+              <Heading align="center" tag="h2">
+                Thanks so much for using this boilerplate!
+              </Heading>
+              <Heading align="center" tag="h2">
+                We worked super hard to make this a useful starter project
+              </Heading>
+              <Footer pad="large" align="center" jusify="center" direction="column">
+                <Heading align="center" tag="h2">
+                  Ready to get started?
+                </Heading>
+                <Box align="center" justify="center" pad="medium">
+                  <Button label="Go to About Page" href="/about" />
+                </Box>
+              </Footer>
             </Section>
             <Section align="center" justify="center">
               <Headline align="center">
@@ -116,49 +125,54 @@ class LandingContainer extends Component {
                 masonry
               >
                 {contributors.map((person, i) =>
-                  <Contributor key={i} person={person} />
+                  <Contributor key={i} person={person} />,
                 )}
               </Columns>
             </Section>
             <Footer pad="large" align="center" jusify="center" direction="column">
               <Heading align="center" tag="h2">
-                Have any questions?
+                Have any questions??
               </Heading>
               <Box align="center" justify="center" pad="medium">
                 <Button label="Get in Touch" href="mailto:admin@ryancollins.io" />
               </Box>
             </Footer>
           </Box>
-        }
+        </Maybe>
       </Box>
     );
   }
 }
 
 LandingContainer.propTypes = {
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired, // eslint-disable-line
   isLoading: PropTypes.bool.isRequired,
   isShowingModal: PropTypes.bool.isRequired,
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.object.isRequired, // eslint-disable-line
   name: PropTypes.string,
-  contributors: PropTypes.array.isRequired,
-  links: PropTypes.array.isRequired,
+  contributors: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      github: PropTypes.string.isRequired,
+      bio: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 // mapStateToProps :: {State} -> {Props}
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   isLoading: state.landing.isLoading,
   name: state.landing.name,
   isShowingModal: state.landing.isShowingModal,
   contributors: state.landing.contributors,
-  links: state.landing.links,
 });
 
 // mapDispatchToProps :: Dispatch -> {Action}
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(
     LandingActionCreators,
-    dispatch
+    dispatch,
   ),
 });
 
@@ -171,5 +185,5 @@ const FormContainer = reduxForm({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(FormContainer);

@@ -1,10 +1,10 @@
-import * as types from './constants';
 import update from 'react-addons-update';
+import * as types from './constants';
 
 export const initialState = {
   isLoading: false,
   name: null,
-  isShowingModal: true,
+  isShowingModal: false,
   contributors: [
     {
       name: 'Ryan Collins',
@@ -24,37 +24,17 @@ export const initialState = {
       avatar: 'https://avatars.githubusercontent.com/u/13679375?v=3',
     },
   ],
-  links: [
-    {
-      url: 'https://github.com/udacityalumni/alumni-client',
-      name: 'Udacity Alumni Web App',
-    },
-    {
-      url: 'https://github.com/RyanCCollins/react-weekly',
-      name: 'React Weekly',
-    },
-    {
-      url: 'https://github.com/RyanCCollins/ryancollinsio',
-      name: 'RyanCollins.io 3.0',
-    },
-    {
-      url: 'https://github.com/RyanCCollins/corporate-dashboard',
-      name: 'Corporate Dashboard',
-    },
-    {
-      url: 'https://github.com/RyanCCollins/restaurant-reviewer',
-      name: 'Restaurant Reviewer',
-    },
-    {
-      url: 'https://github.com/RyanCCollins/meetup-event-planner',
-      name: 'Meetup Event Planner',
-    },
-  ],
 };
 
 const landingReducer =
   (state = initialState, action) => {
     switch (action.type) {
+      case types.OPEN_MODAL:
+        return update(state, {
+          isShowingModal: {
+            $set: true,
+          },
+        });
       case types.CLOSE_MODAL:
         return update(state, {
           isShowingModal: {

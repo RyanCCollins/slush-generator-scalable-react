@@ -8,7 +8,7 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: 'What should it be called?',
-      default: 'Scalable',
+      default: 'About',
       validate: value => {
         if ((/.+/).test(value)) {
           return componentNameCheck(value) ? 'A container with this name already exists' : true;
@@ -21,7 +21,13 @@ module.exports = {
       type: 'confirm',
       name: 'wantSCSSModules',
       default: true,
-      message: 'Does it need styling?',
+      message: 'Do you want to use SCSS Modules for styling?',
+    },
+    {
+      type: 'confirm',
+      name: 'wantStyledComponents',
+      default: false,
+      message: 'Do you want to use Styled Components for styling?',
     },
     {
       type: 'confirm',
@@ -70,6 +76,15 @@ module.exports = {
         templateFile: './container/styles.scss.hbs',
         abortOnFail: true,
       });
+    }
+    
+    if (data.wantStyledComponents) {
+      actions.push({
+        type: 'add',
+        path: '../../app/src/containers/{{properCase name}}Container/styles.js',
+        templateFile: './container/styles.js.hbs',
+        abortOnFail: true,
+      }) 
     }
 
     if (data.wantSelectors) {
