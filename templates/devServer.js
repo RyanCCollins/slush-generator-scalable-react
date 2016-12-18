@@ -12,7 +12,7 @@ new WebpackDevServer(webpack(config), {
   hot: true,
   historyApiFallback: true,
   contentBase: path.join(__dirname, 'app/build'),
-}).listen(PORT, IP, function (err, result) {
+}).listen(PORT, 'localhost', function (err, result) {
   if (err) { return console.log(err); }
-  console.log(`Listening at http://${IP}:${PORT}`);
+  console.log('Listening at http://' + IP + ':' + PORT + '');
 });
